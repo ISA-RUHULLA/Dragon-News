@@ -21,3 +21,6 @@
 a.active{
   @apply bg-base-300
 }
+.social-btn{
+  @apply border flex gap-3 items-center hover:bg-secondary cursor-pointer w-full text-start p-3 rounded-lg shadow-lg
+}
