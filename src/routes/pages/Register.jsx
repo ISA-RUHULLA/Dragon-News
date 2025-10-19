@@ -1,11 +1,32 @@
-import React from 'react';
+
 import { Link } from 'react-router';
+import AuthProvider, { AuthContext } from '../../provider/AuthProvider';
+import { use,  } from 'react';
 
 const Register = () => {
 
-   const handleRegister = (e) => {
+    const {createUser, setUser} = use(AuthContext)
+
+    const handleRegister = (e) => {
         e.preventDefault();
-        console.log(e.target)
+        const form = e.target
+        const name = form.name.value;
+        const email = form.email.value;
+        const photo = form.photo.value;
+        const password = form.password.value;
+        console.log({name, email, photo, password})
+
+        createUser(email, password)
+        .then((result) =>{
+            const user = result.user;
+            console.log(user);
+            setUser(user);
+        })
+        .catch((error) => {
+            console.log(error.message)
+        });
+
+
 
     }
     return (
@@ -17,16 +38,16 @@ const Register = () => {
                         <fieldset className="fieldset">
                             {/* Name  */}
                             <label className="label">Name</label>
-                            <input type="email" className="input" placeholder="Name" />
+                            <input type="text" name='name' className="input" placeholder="Name" required/>
                             {/* Photo URl */}
                             <label className="label">Photo URl</label>
-                            <input type="email" className="input" placeholder="Photo URl" />
+                            <input type="text" name='photo' className="input" placeholder="Photo URl" required />
                             {/* Email */}
                             <label className="label">Email</label>
-                            <input type="email" className="input" placeholder="Email" />
+                            <input type="email" name='email' className="input" placeholder="Email" required />
                             {/* Password  */}
                             <label className="label">Password</label>
-                            <input type="password" className="input" placeholder="Password" />
+                            <input type="password" name='password' className="input" placeholder="Password" required />
 
 
                             <button type='submit' className="btn btn-neutral mt-4">Register</button>
